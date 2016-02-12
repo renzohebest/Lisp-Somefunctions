@@ -1,6 +1,14 @@
 ;;;; hw2_rtejada 
 ;;; Renzo Tejada
 
+;; Self Notes
+;; Use od lamda
+(setq number (1+ 2))
+((lambda (number) (* 7 number)) 3)
+;;
+;;;
+;;; HW #2
+
 (proclaim '(optimize (debug 1)))
 (defun fib (n &optional (x 0) (y 1) (total 1))
   (if (<= n 0)  x ;; Pre: n is 0 or negative return 0
@@ -55,6 +63,49 @@
  (nub '(1 2 3 4 5 6))
  (nub (list 1 1 1 2 2 3 4 4 4 4 4))
 ; 
+
+(defun zip_with (fn xs ys)
+;; (loop for i in '(1 2 3) do (print i))
+	(zip_with-helper nil fn xs ys )
+	; (loop for i in xs
+	; 	for j in ys
+	;     ;do (and(funcall  'cons  i j)(print i)(print j))
+	;     do (cons (funcall  'cons  i j) r_list) 
+	; )
+)
+
+(defun zip_with-helper (r_list fn xs ys)
+   (loop for i in xs
+		for j in ys
+	    ;do (and(funcall  'cons  i j)(print i)(print j))
+	    do (
+	    	and(push (funcall fn i j) r_list)(print  r_list)(print  i)
+	    )
+	    ;when ( (null (car r_list)))
+	)
+   ; (r_list)
+
+)
+
+
+
+ (defun prince-of-clarity (w)
+   "Take a cons of two lists and make a list of conses.
+    Think of this function as being like a zipper."
+   (do ((y (car w) (cdr y))
+        (z (cdr w) (cdr z))
+        (x '() (cons (cons (car y) (car z)) x)))
+       ((null y) x)
+     (when (null z)
+       (cerror "Will self-pair extraneous items"
+              "Mismatch - gleep!  ~S" y)
+       (setq z y)))) 
+
+
+
+
+(zip_with #'+ (list 1 2 3) (list 10 20 30))
+
 
 
 
