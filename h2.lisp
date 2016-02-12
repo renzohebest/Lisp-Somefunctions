@@ -28,23 +28,32 @@
              never (zerop (mod n i)))))
 )
 
-; r_list holds new list, xs holds list being passed
-(defun nub-helper (r_list xs)
-    ( if xs
-      (nub-helper  (cons (car xs) r_list) (cdr xs) )  
-      r_list
+
+(defun nub-helper (r_list xs) ; r_list holds new list, xs holds list being passed
+    (cond
+      ;(nub-helper  (cons (car xs) r_list) (cdr xs) )  
+      ;( if t       (nub-helper  (cons (car xs) r_list) (cdr xs) ) ) 
+       (
+       		(not(member   (car xs)  r_list )) ; pre_con: head of xs can't be in r_list
+       			(nub-helper  (cons (car xs) r_list) (cdr xs) ) ; action; push new element to head of the list
+       )
+       (; 							at this point premis is that (car xs) is a member already
+	 		(member   (car xs)  r_list ) 
+					;(nub-helper   r_list (cdr xs) )
+					(if (cdr xs)
+						(nub-helper r_list (cdr xs) )
+						(reversed r_list)
+					)
+       	)   
     )
 )
- 
-  ;(t(r_list))
-
 
 (defun nub (xs)
    (nub-helper nil xs)
 
 )
-
-(nub '(1 2 3 4 5 6))
+ (nub '(1 2 3 4 5 6))
+ (nub (list 1 1 1 2 2 3 4 4 4 4 4))
 ; 
 
 
